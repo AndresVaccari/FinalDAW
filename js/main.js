@@ -20,10 +20,29 @@
     mensajeErrorInicio.className = "mensaje-error oculto";
   }
 
-  /* Maneja el envio del formulario de inicio de partida */
+  /* Valida los datos ingresados antes de iniciar la partida */
   function alEnviarFormulario(evento) {
+    var resultadoNombre;
+    var resultadoNivel;
+
     evento.preventDefault();
     ocultarError();
+
+    resultadoNombre = Validaciones.validarNombre(inputNombre.value);
+
+    if (!resultadoNombre.valido) {
+      mostrarError(resultadoNombre.mensaje);
+      inputNombre.focus();
+      return;
+    }
+
+    resultadoNivel = Validaciones.validarNivel(selectNivel.value);
+
+    if (!resultadoNivel.valido) {
+      mostrarError(resultadoNivel.mensaje);
+      return;
+    }
+
     mostrarError("Falta conectar la logica del juego.");
   }
 
