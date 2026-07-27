@@ -1,0 +1,86 @@
+/* Estilos generales del sitio */
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f2f6f9;
+  color: #1e2a32;
+}
+
+/* Encabezado y navegacion */
+
+.encabezado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 15px;
+  background-color: #2f6f4f;
+  color: #ffffff;
+}
+
+.titulo-sitio {
+  font-size: 26px;
+  text-align: center;
+}
+
+.navegacion {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.link-nav {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background-color: #275c42;
+  font-size: 15px;
+}
+
+.link-nav:hover {
+  background-color: #1d4632;
+}
+
+.link-nav.activo {
+  background-color: #1d4632;
+  font-weight: bold;
+}
+
+/* Contenido principal */
+
+.contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  flex-grow: 1;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 15px;
+}
+
+/* Pie de pagina */
+
+.pie {
+  padding: 15px;
+  background-color: #1d4632;
+  color: #ffffff;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+  .titulo-sitio {
+    font-size: 21px;
+  }
+
+  .link-nav {
+    font-size: 14px;
+    padding: 7px 11px;
+  }
+}
