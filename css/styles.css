@@ -376,6 +376,62 @@ body {
   gap: 10px;
 }
 
+.modal-ancho {
+  max-width: 560px;
+}
+
+/* Listado del ranking */
+
+.lista-ranking {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fila-ranking {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 11px;
+  border-radius: 6px;
+  background-color: #f2f6f9;
+  font-size: 14px;
+}
+
+.posicion-ranking {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: #2f6f4f;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.jugador-ranking {
+  flex-grow: 1;
+  font-weight: bold;
+}
+
+.detalle-ranking {
+  width: 100%;
+  color: #52646f;
+  font-size: 13px;
+}
+
+.boton-peligro {
+  background-color: #9e2020;
+  color: #ffffff;
+}
+
+.boton-peligro:hover {
+  background-color: #831919;
+}
+
 /* Pie de pagina */
 
 .pie {

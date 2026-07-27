@@ -25,6 +25,21 @@
   var botonReiniciar = document.getElementById("boton-reiniciar");
   var botonVolverInicio = document.getElementById("boton-volver-inicio");
 
+  var modalRanking = document.getElementById("modal-ranking");
+  var listaRanking = document.getElementById("lista-ranking");
+  var mensajeRankingVacio = document.getElementById("mensaje-ranking-vacio");
+  var selectOrden = document.getElementById("select-orden");
+  var botonVerRanking = document.getElementById("boton-ver-ranking");
+  var botonCerrarRanking = document.getElementById("boton-cerrar-ranking");
+  var botonBorrarRanking = document.getElementById("boton-borrar-ranking");
+
+  var modalConfirmarBorrado = document.getElementById("modal-confirmar-borrado");
+  var botonConfirmarBorrado = document.getElementById("boton-confirmar-borrado");
+  var botonCancelarBorrado = document.getElementById("boton-cancelar-borrado");
+
+  /* Peso de cada nivel para poder ordenar el ranking por dificultad */
+  var PESO_DE_NIVELES = { facil: 1, medio: 2, dificil: 3 };
+
   /* Datos de la partida en curso, para poder reiniciarla sin recargar */
   var jugadorActual = "";
   var nivelActual = "";
@@ -86,6 +101,164 @@
     inputNombre.focus();
   }
 
+  /* Agrega un cero adelante para mostrar siempre dos digitos */
+  function agregarCeroAdelante(numero) {
+    if (numero < 10) {
+      return "0" + numero;
+    }
+
+    return "" + numero;
+  }
+
+  /* Convierte una cantidad de segundos al formato mm:ss */
+  function formatearDuracion(segundos) {
+    var minutos = Math.floor(segundos / 60);
+    var resto = segundos % 60;
+
+    return agregarCeroAdelante(minutos) + ":" + agregarCeroAdelante(resto);
+  }
+
+  /* Convierte una marca de tiempo al formato dd/mm/aaaa hh:mm */
+  function formatearFecha(milisegundos) {
+    var fecha = new Date(milisegundos);
+
+    return (
+      agregarCeroAdelante(fecha.getDate()) +
+      "/" +
+      agregarCeroAdelante(fecha.getMonth() + 1) +
+      "/" +
+      fecha.getFullYear() +
+      " " +
+      agregarCeroAdelante(fecha.getHours()) +
+      ":" +
+      agregarCeroAdelante(fecha.getMinutes())
+    );
+  }
+
+  /* Comparadores usados para ordenar el ranking */
+  function compararPorPuntaje(primera, segunda) {
+    return segunda.puntaje - primera.puntaje;
+  }
+
+  function compararPorFecha(primera, segunda) {
+    return segunda.fecha - primera.fecha;
+  }
+
+  function compararPorDuracion(primera, segunda) {
+    return primera.duracion - segunda.duracion;
+  }
+
+  function compararPorNivel(primera, segunda) {
+    return PESO_DE_NIVELES[segunda.nivel] - PESO_DE_NIVELES[primera.nivel];
+  }
+
+  /* Ordena una copia del ranking segun el criterio elegido */
+  function ordenarRanking(ranking, criterio) {
+    var copia = ranking.slice();
+
+    if (criterio === "fecha") {
+      return copia.sort(compararPorFecha);
+    }
+
+    if (criterio === "duracion") {
+      return copia.sort(compararPorDuracion);
+    }
+
+    if (criterio === "nivel") {
+      return copia.sort(compararPorNivel);
+    }
+
+    return copia.sort(compararPorPuntaje);
+  }
+
+  /* Crea el elemento HTML de una fila del ranking */
+  function crearFilaRanking(partida, posicion) {
+    var fila = document.createElement("li");
+    var numero = document.createElement("span");
+    var jugador = document.createElement("span");
+    var puntaje = document.createElement("span");
+    var detalle = document.createElement("span");
+
+    fila.className = "fila-ranking";
+
+    numero.className = "posicion-ranking";
+    numero.textContent = posicion;
+
+    jugador.className = "jugador-ranking";
+    jugador.textContent = partida.nombreJugador;
+
+    puntaje.textContent = partida.puntaje + " pts";
+
+    detalle.className = "detalle-ranking";
+    detalle.textContent =
+      "Nivel " +
+      partida.nombreNivel +
+      " - " +
+      partida.intentos +
+      " intentos - " +
+      partida.errores +
+      " errores - " +
+      formatearDuracion(partida.duracion) +
+      " - " +
+      formatearFecha(partida.fecha);
+
+    fila.appendChild(numero);
+    fila.appendChild(jugador);
+    fila.appendChild(puntaje);
+    fila.appendChild(detalle);
+
+    return fila;
+  }
+
+  /* Dibuja el ranking completo con el orden elegido */
+  function dibujarRanking() {
+    var ranking = ordenarRanking(Almacenamiento.obtenerRanking(), selectOrden.value);
+    var i;
+
+    listaRanking.innerHTML = "";
+
+    if (ranking.length === 0) {
+      mensajeRankingVacio.className = "texto-ayuda";
+      return;
+    }
+
+    mensajeRankingVacio.className = "texto-ayuda oculto";
+
+    for (i = 0; i < ranking.length; i++) {
+      listaRanking.appendChild(crearFilaRanking(ranking[i], i + 1));
+    }
+  }
+
+  /* Abre el modal del ranking */
+  function abrirRanking() {
+    dibujarRanking();
+    modalRanking.className = "fondo-modal";
+    botonCerrarRanking.focus();
+  }
+
+  /* Cierra el modal del ranking */
+  function cerrarRanking() {
+    modalRanking.className = "fondo-modal oculto";
+  }
+
+  /* Abre el modal propio de confirmacion de borrado */
+  function abrirConfirmacionBorrado() {
+    modalConfirmarBorrado.className = "fondo-modal";
+    botonCancelarBorrado.focus();
+  }
+
+  /* Cierra el modal propio de confirmacion de borrado */
+  function cerrarConfirmacionBorrado() {
+    modalConfirmarBorrado.className = "fondo-modal oculto";
+  }
+
+  /* Borra el historial y refresca el listado */
+  function confirmarBorrado() {
+    Almacenamiento.borrarRanking();
+    cerrarConfirmacionBorrado();
+    dibujarRanking();
+  }
+
   /* Valida los datos ingresados antes de iniciar la partida */
   function alEnviarFormulario(evento) {
     var resultadoNombre;
@@ -113,14 +286,15 @@
 
     nombreJugador = Validaciones.limpiarTexto(inputNombre.value);
     nivel = selectNivel.value;
-    jugadorActual = nombreJugador;
-    nivelActual = nivel;
 
     /* Control de seguridad: el nivel no puede pedir mas pares de los disponibles */
     if (!Juego.hayAnimalesSuficientes(nivel)) {
       mostrarError("No hay suficientes animales para armar este nivel.");
       return;
     }
+
+    jugadorActual = nombreJugador;
+    nivelActual = nivel;
 
     mostrarPantallaJuego(nombreJugador, nivel);
     Juego.iniciarPartida(nombreJugador, nivel);
@@ -134,6 +308,12 @@
   botonCambiarDatos.addEventListener("click", volverAlInicio);
   botonReiniciar.addEventListener("click", reiniciarPartida);
   botonVolverInicio.addEventListener("click", volverAlInicio);
+  botonVerRanking.addEventListener("click", abrirRanking);
+  botonCerrarRanking.addEventListener("click", cerrarRanking);
+  botonBorrarRanking.addEventListener("click", abrirConfirmacionBorrado);
+  botonConfirmarBorrado.addEventListener("click", confirmarBorrado);
+  botonCancelarBorrado.addEventListener("click", cerrarConfirmacionBorrado);
+  selectOrden.addEventListener("change", dibujarRanking);
 
   Juego.definirAlFinalizar(mostrarResultado);
 })();

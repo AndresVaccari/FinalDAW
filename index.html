@@ -55,6 +55,10 @@
             Comenzar partida
           </button>
         </form>
+
+        <button class="boton" id="boton-ver-ranking" type="button">
+          Ver ranking
+        </button>
       </section>
 
       <!-- Pantalla de juego: panel de datos y tablero de cartas -->
@@ -144,6 +148,67 @@
           </button>
           <button class="boton" id="boton-cerrar-resultado" type="button">
             Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal con el ranking de partidas guardadas -->
+    <div class="fondo-modal oculto" id="modal-ranking">
+      <div
+        class="modal modal-ancho"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-ranking"
+      >
+        <h2 class="modal-titulo" id="titulo-ranking">Ranking de partidas</h2>
+
+        <div class="campo">
+          <label class="etiqueta" for="select-orden">Ordenar por</label>
+          <select class="entrada" id="select-orden">
+            <option value="puntaje">Puntaje (mayor primero)</option>
+            <option value="fecha">Fecha (mas reciente primero)</option>
+            <option value="duracion">Duracion (mas rapida primero)</option>
+            <option value="nivel">Nivel (mas dificil primero)</option>
+          </select>
+        </div>
+
+        <p class="texto-ayuda oculto" id="mensaje-ranking-vacio">
+          Todavia no hay partidas guardadas.
+        </p>
+
+        <ul class="lista-ranking" id="lista-ranking"></ul>
+
+        <div class="acciones-modal">
+          <button class="boton boton-peligro" id="boton-borrar-ranking" type="button">
+            Borrar historial
+          </button>
+          <button class="boton boton-principal" id="boton-cerrar-ranking" type="button">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal propio de confirmacion, en lugar de la ventana confirm -->
+    <div class="fondo-modal oculto" id="modal-confirmar-borrado">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-confirmar-borrado"
+      >
+        <h2 class="modal-titulo" id="titulo-confirmar-borrado">Borrar historial</h2>
+        <p class="texto-ayuda">
+          Se van a borrar todas las partidas guardadas y no se pueden recuperar.
+        </p>
+
+        <div class="acciones-modal">
+          <button class="boton boton-peligro" id="boton-confirmar-borrado" type="button">
+            Si, borrar
+          </button>
+          <button class="boton" id="boton-cancelar-borrado" type="button">
+            Cancelar
           </button>
         </div>
       </div>
