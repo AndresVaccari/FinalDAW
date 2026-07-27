@@ -48,6 +48,12 @@ body {
   font-weight: bold;
 }
 
+.boton-tema {
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+}
+
 /* Contenido principal */
 
 .contenido {
@@ -454,6 +460,103 @@ body {
   color: #ffffff;
   text-align: center;
   font-size: 14px;
+}
+
+/* Modo oscuro */
+
+body.tema-oscuro {
+  background-color: #16202a;
+  color: #e6edf3;
+}
+
+.tema-oscuro .pantalla-inicio,
+.tema-oscuro .dato,
+.tema-oscuro .modal {
+  background-color: #22303c;
+}
+
+.tema-oscuro .dato-etiqueta,
+.tema-oscuro .texto-ayuda,
+.tema-oscuro .detalle-ranking {
+  color: #a7bac9;
+}
+
+.tema-oscuro .entrada {
+  background-color: #16202a;
+  color: #e6edf3;
+  border-color: #3c4c5a;
+}
+
+.tema-oscuro .boton {
+  background-color: #3c4c5a;
+  color: #e6edf3;
+}
+
+.tema-oscuro .boton:hover {
+  background-color: #4a5c6c;
+}
+
+.tema-oscuro .boton-principal {
+  background-color: #3f8f68;
+  color: #0f1720;
+}
+
+.tema-oscuro .boton-principal:hover {
+  background-color: #4fa377;
+}
+
+.tema-oscuro .boton-peligro {
+  background-color: #c04545;
+  color: #ffffff;
+}
+
+.tema-oscuro .fila-resultado,
+.tema-oscuro .fila-ranking {
+  background-color: #16202a;
+}
+
+.tema-oscuro .fila-resultado.destacada {
+  background-color: #234233;
+  color: #e6edf3;
+}
+
+.tema-oscuro .modal-titulo,
+.tema-oscuro .subtitulo {
+  color: #e6edf3;
+}
+
+.tema-oscuro .carta-frente {
+  background-color: #22303c;
+  border-color: #3f8f68;
+}
+
+.tema-oscuro .carta.emparejada .carta-frente {
+  background-color: #234233;
+}
+
+.tema-oscuro .carta.emparejada .carta-frente::after {
+  color: #7fd0a4;
+}
+
+.tema-oscuro .carta.incorrecta .carta-frente {
+  background-color: #422323;
+  border-color: #d16a6a;
+}
+
+.tema-oscuro .carta.incorrecta .carta-frente::after {
+  color: #f0a0a0;
+}
+
+.tema-oscuro .mensaje-error {
+  background-color: #422323;
+  color: #f5c6c6;
+  border-left-color: #d16a6a;
+}
+
+.tema-oscuro .mensaje-exito {
+  background-color: #234233;
+  color: #b9e8cd;
+  border-left-color: #7fd0a4;
 }
 
 /* Responsive */

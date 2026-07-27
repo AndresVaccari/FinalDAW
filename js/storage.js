@@ -4,6 +4,7 @@ var Almacenamiento = (function () {
   "use strict";
 
   var CLAVE_RANKING = "memotest-ranking";
+  var CLAVE_TEMA = "memotest-tema";
   var MAXIMO_DE_PARTIDAS = 50;
 
   /* Algunos navegadores bloquean LocalStorage, por eso se controla el acceso */
@@ -101,9 +102,42 @@ var Almacenamiento = (function () {
     }
   }
 
+  /* Guarda el tema elegido por el usuario */
+  function guardarTema(tema) {
+    if (!hayLocalStorage()) {
+      return false;
+    }
+
+    try {
+      window.localStorage.setItem(CLAVE_TEMA, tema);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  /* Devuelve el tema guardado, o "claro" si todavia no se eligio ninguno */
+  function obtenerTema() {
+    var temaGuardado;
+
+    if (!hayLocalStorage()) {
+      return "claro";
+    }
+
+    temaGuardado = window.localStorage.getItem(CLAVE_TEMA);
+
+    if (temaGuardado !== "claro" && temaGuardado !== "oscuro") {
+      return "claro";
+    }
+
+    return temaGuardado;
+  }
+
   return {
     obtenerRanking: obtenerRanking,
     guardarPartida: guardarPartida,
-    borrarRanking: borrarRanking
+    borrarRanking: borrarRanking,
+    guardarTema: guardarTema,
+    obtenerTema: obtenerTema
   };
 })();
