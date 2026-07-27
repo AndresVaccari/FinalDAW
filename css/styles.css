@@ -160,6 +160,114 @@ body {
   background-color: #245740;
 }
 
+/* Pantalla de juego */
+
+.pantalla-juego {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+}
+
+.panel-datos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.dato {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 92px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dato-etiqueta {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #52646f;
+}
+
+.dato-valor {
+  font-size: 17px;
+  font-weight: bold;
+}
+
+/* Tablero de cartas */
+
+.tablero {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.tablero-facil .carta {
+  width: calc(25% - 6px);
+}
+
+.tablero-medio .carta {
+  width: calc(20% - 7px);
+}
+
+.tablero-dificil .carta {
+  width: calc(16.6% - 7px);
+}
+
+.carta {
+  position: relative;
+  height: 80px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  perspective: 600px;
+}
+
+.carta-cara {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  font-size: 32px;
+  backface-visibility: hidden;
+  transition: transform 0.4s;
+}
+
+.carta-dorso {
+  background-color: #2f6f4f;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.carta-frente {
+  background-color: #ffffff;
+  border: 2px solid #2f6f4f;
+  transform: rotateY(180deg);
+}
+
+.carta.descubierta .carta-dorso {
+  transform: rotateY(180deg);
+}
+
+.carta.descubierta .carta-frente {
+  transform: rotateY(360deg);
+}
+
 /* Pie de pagina */
 
 .pie {
@@ -172,6 +280,16 @@ body {
 
 /* Responsive */
 
+@media (max-width: 700px) {
+  .carta {
+    height: 64px;
+  }
+
+  .carta-cara {
+    font-size: 25px;
+  }
+}
+
 @media (max-width: 600px) {
   .titulo-sitio {
     font-size: 21px;
@@ -180,5 +298,20 @@ body {
   .link-nav {
     font-size: 14px;
     padding: 7px 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carta {
+    height: 52px;
+  }
+
+  .carta-cara {
+    font-size: 20px;
+  }
+
+  .dato {
+    min-width: 78px;
+    padding: 6px 9px;
   }
 }

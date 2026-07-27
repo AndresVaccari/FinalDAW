@@ -56,6 +56,22 @@
           </button>
         </form>
       </section>
+
+      <!-- Pantalla de juego: panel de datos y tablero de cartas -->
+      <section class="pantalla-juego oculto" id="pantalla-juego">
+        <div class="panel-datos">
+          <p class="dato">
+            <span class="dato-etiqueta">Jugador</span>
+            <span class="dato-valor" id="dato-jugador">-</span>
+          </p>
+          <p class="dato">
+            <span class="dato-etiqueta">Nivel</span>
+            <span class="dato-valor" id="dato-nivel">-</span>
+          </p>
+        </div>
+
+        <div class="tablero" id="tablero"></div>
+      </section>
     </main>
 
     <footer class="pie">
@@ -63,6 +79,7 @@
     </footer>
 
     <script src="js/validations.js"></script>
+    <script src="js/game.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
