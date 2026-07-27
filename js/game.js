@@ -265,6 +265,7 @@ var Juego = (function () {
     var resultado;
 
     detenerTemporizador();
+    Sonidos.reproducir("fin");
     estado.partidaActiva = false;
     estado.puntaje = calcularPuntaje() + BONUS_POR_TERMINAR;
 
@@ -305,6 +306,7 @@ var Juego = (function () {
 
     if (primera.emoji === segunda.emoji) {
       estado.paresEncontrados = estado.paresEncontrados + 1;
+      Sonidos.reproducir("acierto");
       marcarCartaEmparejada(estado.primeraCarta.elemento, estado.primeraCarta.indice);
       marcarCartaEmparejada(estado.segundaCarta.elemento, estado.segundaCarta.indice);
       limpiarSeleccion();
@@ -314,6 +316,7 @@ var Juego = (function () {
     }
 
     estado.errores = estado.errores + 1;
+    Sonidos.reproducir("error");
     actualizarPanel();
 
     /* Las cartas incorrectas quedan visibles un momento antes de taparse */
@@ -342,6 +345,7 @@ var Juego = (function () {
 
     /* El reloj arranca recien cuando el jugador descubre la primera carta */
     iniciarTemporizador();
+    Sonidos.reproducir("carta");
     descubrirCarta(this, indice);
 
     if (estado.primeraCarta === null) {

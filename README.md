@@ -117,6 +117,9 @@ encontrar (18 pares x 100 = 1800 puntos base contra 800 del nivel fácil).
   fecha, hora y duración de cada partida.
 - Modal de ranking con orden configurable por puntaje, fecha, duración o nivel.
 - Borrado del historial confirmado con un modal propio.
+- **Sonidos** al seleccionar una carta, al encontrar un par, al equivocarse y al
+  completar el nivel, con un botón para activarlos o silenciarlos y la preferencia
+  recordada en LocalStorage.
 - **Modo claro y modo oscuro**, con la preferencia recordada en LocalStorage.
 - Estados visuales diferenciados para cartas seleccionadas, correctas e
   incorrectas, marcados con **color y con un símbolo** (✔ / ✖), para no depender
@@ -133,6 +136,8 @@ encontrar (18 pares x 100 = 1800 puntos base contra 800 del nivel fácil).
 ## Estructura de archivos
 
 ```
+/assets
+  /sounds          Efectos de sonido del juego (.wav)
 /css
   reset.css        Reset de los estilos por defecto del navegador
   styles.css       Estilos del sitio, modo oscuro y responsive
@@ -140,6 +145,7 @@ encontrar (18 pares x 100 = 1800 puntos base contra 800 del nivel fácil).
   validations.js   Validaciones reutilizables (nombre, nivel, mail, mensaje)
   storage.js       Lectura y escritura en LocalStorage
   theme.js         Cambio entre modo claro y modo oscuro
+  sounds.js        Reproducción de sonidos y opción para silenciarlos
   game.js          Lógica del juego: niveles, mezcla, tablero y puntaje
   main.js          Conexión entre la interfaz y la lógica del juego
   contact.js       Formulario de contacto
@@ -149,6 +155,20 @@ index.html         Página principal del juego
 README.md
 .gitignore
 ```
+
+## Créditos de los sonidos
+
+Todos los efectos de sonido son de **Leszek_Szary**, publicados en
+[freesound.org](https://freesound.org/) y libres de derechos.
+
+| Archivo         | Evento del juego            | Fuente                                                    |
+| --------------- | --------------------------- | --------------------------------------------------------- |
+| `click.wav`     | Seleccionar una carta       | https://freesound.org/people/Leszek_Szary/sounds/171520/  |
+| `good.wav`      | Encontrar un par correcto   | https://freesound.org/people/Leszek_Szary/sounds/146723/  |
+| `error.wav`     | Equivocarse en un par       | https://freesound.org/people/Leszek_Szary/sounds/146730/  |
+| `success-1.wav` | Completar el nivel          | https://freesound.org/people/Leszek_Szary/sounds/171671/  |
+
+Los archivos están en `assets/sounds/`.
 
 ## Convenciones de nombres
 

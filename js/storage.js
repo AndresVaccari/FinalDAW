@@ -5,6 +5,7 @@ var Almacenamiento = (function () {
 
   var CLAVE_RANKING = "memotest-ranking";
   var CLAVE_TEMA = "memotest-tema";
+  var CLAVE_SONIDO = "memotest-sonido";
   var MAXIMO_DE_PARTIDAS = 50;
 
   /* Algunos navegadores bloquean LocalStorage, por eso se controla el acceso */
@@ -133,11 +134,41 @@ var Almacenamiento = (function () {
     return temaGuardado;
   }
 
+  /* Guarda si los sonidos quedaron activados o silenciados */
+  function guardarSonido(activo) {
+    if (!hayLocalStorage()) {
+      return false;
+    }
+
+    try {
+      window.localStorage.setItem(CLAVE_SONIDO, activo ? "activado" : "silenciado");
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  /* Devuelve true si los sonidos estan activados.
+     Si el usuario nunca eligio, arrancan activados. */
+  function obtenerSonido() {
+    var valorGuardado;
+
+    if (!hayLocalStorage()) {
+      return true;
+    }
+
+    valorGuardado = window.localStorage.getItem(CLAVE_SONIDO);
+
+    return valorGuardado !== "silenciado";
+  }
+
   return {
     obtenerRanking: obtenerRanking,
     guardarPartida: guardarPartida,
     borrarRanking: borrarRanking,
     guardarTema: guardarTema,
-    obtenerTema: obtenerTema
+    obtenerTema: obtenerTema,
+    guardarSonido: guardarSonido,
+    obtenerSonido: obtenerSonido
   };
 })();
