@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contacto - Memotest de Animales</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+
+  <body>
+    <header class="encabezado">
+      <h1 class="titulo-sitio">Memotest de Animales</h1>
+
+      <nav class="navegacion">
+        <a class="link-nav" href="../index.html">Juego</a>
+        <a class="link-nav activo" href="contact.html">Contacto</a>
+        <a
+          class="link-nav"
+          href="https://github.com/AndresVaccari/FinalDAW"
+          target="_blank"
+          rel="noopener"
+          >Repositorio</a
+        >
+        <a
+          class="link-nav"
+          href="https://andresvaccari.github.io/FinalDAW/"
+          target="_blank"
+          rel="noopener"
+          >Github Pages</a
+        >
+      </nav>
+    </header>
+
+    <main class="contenido">
+      <section class="pantalla-inicio">
+        <h2 class="subtitulo">Contacto</h2>
+
+        <p class="texto-ayuda">
+          Escribinos tu consulta y se va a abrir tu programa de correo con el
+          mensaje ya cargado.
+        </p>
+
+        <form class="formulario-inicio" id="formulario-contacto">
+          <div class="campo">
+            <label class="etiqueta" for="input-nombre-contacto">Nombre</label>
+            <input
+              class="entrada"
+              id="input-nombre-contacto"
+              type="text"
+              placeholder="Tu nombre"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="campo">
+            <label class="etiqueta" for="input-mail">Mail</label>
+            <input
+              class="entrada"
+              id="input-mail"
+              type="text"
+              placeholder="tunombre@ejemplo.com"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="campo">
+            <label class="etiqueta" for="input-mensaje">Mensaje</label>
+            <textarea
+              class="entrada area-texto"
+              id="input-mensaje"
+              rows="5"
+              placeholder="Escribi tu mensaje"
+            ></textarea>
+          </div>
+
+          <p class="mensaje-error oculto" id="mensaje-error-contacto"></p>
+          <p class="mensaje-exito oculto" id="mensaje-exito-contacto"></p>
+
+          <button class="boton boton-principal" type="submit">
+            Enviar mensaje
+          </button>
+        </form>
+      </section>
+    </main>
+
+    <footer class="pie">
+      <p>Proyecto Final - Desarrollo y Arquitecturas Web - UAI 2026</p>
+    </footer>
+
+    <script src="../js/validations.js"></script>
+    <script src="../js/contact.js"></script>
+  </body>
+</html>
