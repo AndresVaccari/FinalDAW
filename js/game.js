@@ -39,6 +39,9 @@ var Juego = (function () {
   /* Tiempo que quedan visibles dos cartas que no coinciden */
   var MILISEGUNDOS_PARA_TAPAR = 900;
 
+  /* Valores del sistema de puntaje */
+  var PUNTOS_POR_PAR = 100;
+
   /* Estado de la partida en curso */
   var estado = {
     nombreJugador: "",
@@ -47,10 +50,18 @@ var Juego = (function () {
     primeraCarta: null,
     segundaCarta: null,
     tableroBloqueado: false,
-    partidaActiva: false
+    partidaActiva: false,
+    intentos: 0,
+    errores: 0,
+    paresEncontrados: 0,
+    puntaje: 0
   };
 
   var tablero = document.getElementById("tablero");
+  var datoIntentos = document.getElementById("dato-intentos");
+  var datoPares = document.getElementById("dato-pares");
+  var datoErrores = document.getElementById("dato-errores");
+  var datoPuntaje = document.getElementById("dato-puntaje");
 
   /* Mezcla un arreglo con el algoritmo de Fisher-Yates */
   function mezclarArreglo(arreglo) {
@@ -167,17 +178,48 @@ var Juego = (function () {
     limpiarSeleccion();
   }
 
+  /* Calcula el puntaje actual: los pares suman y los errores restan.
+     El puntaje nunca puede quedar por debajo de cero. */
+  function calcularPuntaje() {
+    var penalizacion = NIVELES[estado.nivel].penalizacion;
+    var total =
+      estado.paresEncontrados * PUNTOS_POR_PAR - estado.errores * penalizacion;
+
+    if (total < 0) {
+      return 0;
+    }
+
+    return total;
+  }
+
+  /* Vuelca los contadores del estado en el panel de datos */
+  function actualizarPanel() {
+    estado.puntaje = calcularPuntaje();
+
+    datoIntentos.textContent = estado.intentos;
+    datoPares.textContent = estado.paresEncontrados;
+    datoErrores.textContent = estado.errores;
+    datoPuntaje.textContent = estado.puntaje;
+  }
+
   /* Compara las dos cartas seleccionadas en el turno */
   function compararCartas() {
     var primera = estado.cartas[estado.primeraCarta.indice];
     var segunda = estado.cartas[estado.segundaCarta.indice];
 
+    estado.intentos = estado.intentos + 1;
+
     if (primera.emoji === segunda.emoji) {
+      estado.paresEncontrados = estado.paresEncontrados + 1;
       marcarCartaEmparejada(estado.primeraCarta.elemento, estado.primeraCarta.indice);
       marcarCartaEmparejada(estado.segundaCarta.elemento, estado.segundaCarta.indice);
       limpiarSeleccion();
+      actualizarPanel();
       return;
     }
+
+    estado.errores = estado.errores + 1;
+    actualizarPanel();
 
     /* Las cartas incorrectas quedan visibles un momento antes de taparse */
     estado.primeraCarta.elemento.className = "carta descubierta incorrecta";
@@ -224,8 +266,13 @@ var Juego = (function () {
     estado.segundaCarta = null;
     estado.tableroBloqueado = false;
     estado.partidaActiva = true;
+    estado.intentos = 0;
+    estado.errores = 0;
+    estado.paresEncontrados = 0;
+    estado.puntaje = 0;
 
     dibujarTablero();
+    actualizarPanel();
   }
 
   /* Indica si hay suficientes animales para armar el nivel pedido */
