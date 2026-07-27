@@ -18,15 +18,50 @@
       </nav>
     </header>
 
-    <main class="contenido"></main>
+    <main class="contenido">
+      <!-- Pantalla de inicio: datos del jugador y nivel -->
+      <section class="pantalla-inicio" id="pantalla-inicio">
+        <h2 class="subtitulo">Comenzar una partida</h2>
+
+        <p class="texto-ayuda">
+          Encontra todos los pares de animales en la menor cantidad de intentos
+          y en el menor tiempo posible.
+        </p>
+
+        <form class="formulario-inicio" id="formulario-inicio">
+          <div class="campo">
+            <label class="etiqueta" for="input-nombre">Nombre del jugador</label>
+            <input
+              class="entrada"
+              id="input-nombre"
+              type="text"
+              placeholder="Ingresa tu nombre"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="campo">
+            <label class="etiqueta" for="select-nivel">Nivel de dificultad</label>
+            <select class="entrada" id="select-nivel">
+              <option value="facil">Facil (4x4 - 8 pares)</option>
+              <option value="medio">Medio (4x5 - 10 pares)</option>
+              <option value="dificil">Dificil (6x6 - 18 pares)</option>
+            </select>
+          </div>
+
+          <p class="mensaje-error oculto" id="mensaje-error-inicio"></p>
+
+          <button class="boton boton-principal" id="boton-comenzar" type="submit">
+            Comenzar partida
+          </button>
+        </form>
+      </section>
+    </main>
 
     <footer class="pie">
       <p>Proyecto Final - Desarrollo y Arquitecturas Web - UAI 2026</p>
     </footer>
 
-    <script src="js/validations.js"></script>
-    <script src="js/storage.js"></script>
-    <script src="js/game.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

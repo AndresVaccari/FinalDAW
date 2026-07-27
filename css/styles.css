@@ -62,6 +62,104 @@ body {
   padding: 20px 15px;
 }
 
+/* Utilidades */
+
+.oculto {
+  display: none;
+}
+
+/* Pantalla de inicio */
+
+.pantalla-inicio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  max-width: 420px;
+  padding: 25px 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.subtitulo {
+  font-size: 21px;
+  text-align: center;
+}
+
+.texto-ayuda {
+  font-size: 15px;
+  text-align: center;
+  color: #52646f;
+}
+
+.formulario-inicio {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.etiqueta {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.entrada {
+  padding: 10px;
+  border: 1px solid #b9c6cf;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #1e2a32;
+}
+
+.entrada:focus {
+  outline: 2px solid #2f6f4f;
+  border-color: #2f6f4f;
+}
+
+.mensaje-error {
+  padding: 9px 11px;
+  border-radius: 6px;
+  background-color: #fbe3e3;
+  color: #9e2020;
+  border-left: 4px solid #9e2020;
+  font-size: 14px;
+}
+
+/* Botones */
+
+.boton {
+  padding: 11px 18px;
+  border: none;
+  border-radius: 6px;
+  background-color: #cfdae1;
+  color: #1e2a32;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.boton:hover {
+  background-color: #bccad3;
+}
+
+.boton-principal {
+  background-color: #2f6f4f;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.boton-principal:hover {
+  background-color: #245740;
+}
+
 /* Pie de pagina */
 
 .pie {
