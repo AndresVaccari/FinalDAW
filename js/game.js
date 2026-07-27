@@ -179,8 +179,13 @@ var Juego = (function () {
     estado.tableroBloqueado = false;
   }
 
-  /* Tapa las dos cartas del turno cuando no forman un par */
+  /* Tapa las dos cartas del turno cuando no forman un par.
+     Puede quedar pendiente si la partida se reinicio, por eso se controla antes. */
   function taparCartasDelTurno() {
+    if (estado.primeraCarta === null || estado.segundaCarta === null) {
+      return;
+    }
+
     taparCarta(estado.primeraCarta.elemento, estado.primeraCarta.indice);
     taparCarta(estado.segundaCarta.elemento, estado.segundaCarta.indice);
     limpiarSeleccion();
