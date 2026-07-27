@@ -20,6 +20,14 @@
   var resultadoTiempo = document.getElementById("resultado-tiempo");
   var resultadoPuntaje = document.getElementById("resultado-puntaje");
   var botonCerrarResultado = document.getElementById("boton-cerrar-resultado");
+  var botonJugarDeNuevo = document.getElementById("boton-jugar-de-nuevo");
+  var botonCambiarDatos = document.getElementById("boton-cambiar-datos");
+  var botonReiniciar = document.getElementById("boton-reiniciar");
+  var botonVolverInicio = document.getElementById("boton-volver-inicio");
+
+  /* Datos de la partida en curso, para poder reiniciarla sin recargar */
+  var jugadorActual = "";
+  var nivelActual = "";
 
   /* Muestra un mensaje de error dentro de la interfaz */
   function mostrarError(texto) {
@@ -60,6 +68,22 @@
     modalResultado.className = "fondo-modal oculto";
   }
 
+  /* Reinicia la partida con el mismo jugador y el mismo nivel */
+  function reiniciarPartida() {
+    cerrarResultado();
+    Juego.iniciarPartida(jugadorActual, nivelActual);
+  }
+
+  /* Vuelve a la pantalla de inicio para cambiar el jugador o el nivel */
+  function volverAlInicio() {
+    cerrarResultado();
+    Juego.detenerPartida();
+
+    pantallaJuego.className = "pantalla-juego oculto";
+    pantallaInicio.className = "pantalla-inicio";
+    inputNombre.focus();
+  }
+
   /* Valida los datos ingresados antes de iniciar la partida */
   function alEnviarFormulario(evento) {
     var resultadoNombre;
@@ -87,6 +111,8 @@
 
     nombreJugador = Validaciones.limpiarTexto(inputNombre.value);
     nivel = selectNivel.value;
+    jugadorActual = nombreJugador;
+    nivelActual = nivel;
 
     /* Control de seguridad: el nivel no puede pedir mas pares de los disponibles */
     if (!Juego.hayAnimalesSuficientes(nivel)) {
@@ -102,6 +128,10 @@
   inputNombre.addEventListener("input", ocultarError);
   selectNivel.addEventListener("change", ocultarError);
   botonCerrarResultado.addEventListener("click", cerrarResultado);
+  botonJugarDeNuevo.addEventListener("click", reiniciarPartida);
+  botonCambiarDatos.addEventListener("click", volverAlInicio);
+  botonReiniciar.addEventListener("click", reiniciarPartida);
+  botonVolverInicio.addEventListener("click", volverAlInicio);
 
   Juego.definirAlFinalizar(mostrarResultado);
 })();

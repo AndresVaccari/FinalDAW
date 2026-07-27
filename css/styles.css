@@ -200,6 +200,13 @@ body {
   font-weight: bold;
 }
 
+.acciones-juego {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
 /* Tablero de cartas */
 
 .tablero {

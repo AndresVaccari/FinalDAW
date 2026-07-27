@@ -380,6 +380,15 @@ var Juego = (function () {
     return NIVELES[nivel].nombre;
   }
 
+  /* Corta la partida en curso, por ejemplo al volver a la pantalla de inicio */
+  function detenerPartida() {
+    detenerTemporizador();
+    estado.partidaActiva = false;
+    estado.cartas = [];
+    limpiarSeleccion();
+    tablero.innerHTML = "";
+  }
+
   /* Guarda la funcion que la interfaz quiere ejecutar al terminar la partida */
   function definirAlFinalizar(funcion) {
     funcionAlFinalizar = funcion;
@@ -387,6 +396,7 @@ var Juego = (function () {
 
   return {
     iniciarPartida: iniciarPartida,
+    detenerPartida: detenerPartida,
     definirAlFinalizar: definirAlFinalizar,
     hayAnimalesSuficientes: hayAnimalesSuficientes,
     obtenerNombreNivel: obtenerNombreNivel
