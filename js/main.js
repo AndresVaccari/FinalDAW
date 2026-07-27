@@ -50,8 +50,10 @@
     pantallaJuego.className = "pantalla-juego";
   }
 
-  /* Carga el resultado de la partida y abre el modal final */
+  /* Carga el resultado de la partida, lo guarda y abre el modal final */
   function mostrarResultado(resultado) {
+    Almacenamiento.guardarPartida(resultado);
+
     resultadoJugador.textContent = resultado.nombreJugador;
     resultadoNivel.textContent = resultado.nombreNivel;
     resultadoIntentos.textContent = resultado.intentos;
