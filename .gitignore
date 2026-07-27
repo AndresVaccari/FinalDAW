@@ -11,3 +11,6 @@ Thumbs.db
 *.log
 *.tmp
 *~
+
+# Consigna del trabajo practico
+*.pdf
