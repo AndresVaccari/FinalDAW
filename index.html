@@ -66,6 +66,13 @@
             </select>
           </div>
 
+          <div class="campo campo-casilla">
+            <input class="casilla" id="input-progresivo" type="checkbox" />
+            <label class="etiqueta etiqueta-casilla" for="input-progresivo">
+              Modo progresivo: empezar en facil y avanzar hasta dificil
+            </label>
+          </div>
+
           <p class="mensaje-error oculto" id="mensaje-error-inicio" role="alert"></p>
 
           <button class="boton boton-principal" id="boton-comenzar" type="submit">
@@ -133,7 +140,9 @@
         aria-labelledby="titulo-resultado"
       >
         <h2 class="modal-titulo" id="titulo-resultado">Ganaste!</h2>
-        <p class="texto-ayuda">Encontraste todos los pares del tablero.</p>
+        <p class="texto-ayuda" id="texto-resultado">
+          Encontraste todos los pares del tablero.
+        </p>
 
         <ul class="lista-resultado">
           <li class="fila-resultado">
@@ -165,6 +174,43 @@
           </button>
           <button class="boton" id="boton-cerrar-resultado" type="button">
             Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal intermedio del modo progresivo, al pasar de un nivel al siguiente -->
+    <div class="fondo-modal oculto" id="modal-nivel-completado">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-nivel-completado"
+      >
+        <h2 class="modal-titulo" id="titulo-nivel-completado">Nivel completado</h2>
+        <p class="texto-ayuda" id="texto-nivel-completado"></p>
+
+        <ul class="lista-resultado">
+          <li class="fila-resultado">
+            <span>Intentos del nivel</span><span id="paso-intentos">0</span>
+          </li>
+          <li class="fila-resultado">
+            <span>Errores del nivel</span><span id="paso-errores">0</span>
+          </li>
+          <li class="fila-resultado">
+            <span>Tiempo del nivel</span><span id="paso-tiempo">00:00</span>
+          </li>
+          <li class="fila-resultado destacada">
+            <span>Puntaje acumulado</span><span id="paso-puntaje">0</span>
+          </li>
+        </ul>
+
+        <div class="acciones-modal">
+          <button class="boton boton-principal" id="boton-siguiente-nivel" type="button">
+            Continuar
+          </button>
+          <button class="boton" id="boton-abandonar-progresivo" type="button">
+            Volver al inicio
           </button>
         </div>
       </div>

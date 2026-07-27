@@ -125,6 +125,32 @@ body {
   border-color: #2f6f4f;
 }
 
+/* El nivel se deshabilita cuando esta activo el modo progresivo */
+
+.entrada:disabled {
+  background-color: #e4eaee;
+  color: #7a8a95;
+  cursor: not-allowed;
+}
+
+.campo-casilla {
+  flex-direction: row;
+  align-items: center;
+  gap: 9px;
+}
+
+.casilla {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.etiqueta-casilla {
+  font-weight: normal;
+  cursor: pointer;
+}
+
 .mensaje-error {
   padding: 9px 11px;
   border-radius: 6px;
@@ -479,6 +505,11 @@ body.tema-oscuro {
   background-color: #16202a;
   color: #e6edf3;
   border-color: #3c4c5a;
+}
+
+.tema-oscuro .entrada:disabled {
+  background-color: #1c2833;
+  color: #6f8291;
 }
 
 .tema-oscuro .boton {

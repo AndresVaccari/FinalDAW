@@ -45,6 +45,22 @@ necesita 18 pares.
 | Medio   | 4x5     | 20     | 10    | -20 puntos             |
 | Difícil | 6x6     | 36     | 18    | -30 puntos             |
 
+### Modo progresivo
+
+Marcando la casilla **"Modo progresivo"** en la pantalla de inicio, el juego arranca
+en nivel fácil y va avanzando solo: al completar un tablero se muestra un mensaje
+intermedio con lo que hiciste en ese nivel y el puntaje acumulado, y con un botón se
+continúa al siguiente nivel **sin recargar la página**.
+
+- Recorrido: Fácil → Medio → Difícil.
+- El puntaje se **acumula** entre niveles (los tres bonus de +300 se suman).
+- Al completar los tres niveles se muestra un **resultado general** con los intentos,
+  errores, tiempo y puntaje totales.
+- La partida progresiva se guarda en el ranking como una sola entrada de nivel
+  "Progresivo", con el puntaje acumulado.
+- Mientras el modo progresivo está activo, el selector de nivel queda deshabilitado,
+  porque el nivel lo decide el juego.
+
 ## Sistema de puntaje
 
 El puntaje se calcula así:
@@ -95,6 +111,8 @@ encontrar (18 pares x 100 = 1800 puntos base contra 800 del nivel fácil).
 
 ### Adicionales
 
+- **Modo progresivo:** el jugador avanza de fácil a difícil acumulando puntaje, con
+  mensaje intermedio entre niveles y resultado general al terminar (ver más arriba).
 - **Ranking con LocalStorage:** guarda nombre, puntaje, nivel, intentos, errores,
   fecha, hora y duración de cada partida.
 - Modal de ranking con orden configurable por puntaje, fecha, duración o nivel.
