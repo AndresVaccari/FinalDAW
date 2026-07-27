@@ -41,6 +41,7 @@ var Juego = (function () {
 
   /* Valores del sistema de puntaje */
   var PUNTOS_POR_PAR = 100;
+  var PUNTOS_QUE_RESTA_CADA_SEGUNDO = 1;
 
   /* Estado de la partida en curso */
   var estado = {
@@ -54,7 +55,9 @@ var Juego = (function () {
     intentos: 0,
     errores: 0,
     paresEncontrados: 0,
-    puntaje: 0
+    puntaje: 0,
+    segundos: 0,
+    temporizadorId: null
   };
 
   var tablero = document.getElementById("tablero");
@@ -62,6 +65,7 @@ var Juego = (function () {
   var datoPares = document.getElementById("dato-pares");
   var datoErrores = document.getElementById("dato-errores");
   var datoPuntaje = document.getElementById("dato-puntaje");
+  var datoTiempo = document.getElementById("dato-tiempo");
 
   /* Mezcla un arreglo con el algoritmo de Fisher-Yates */
   function mezclarArreglo(arreglo) {
@@ -178,18 +182,37 @@ var Juego = (function () {
     limpiarSeleccion();
   }
 
-  /* Calcula el puntaje actual: los pares suman y los errores restan.
+  /* Calcula el puntaje actual: los pares suman, los errores y el tiempo restan.
      El puntaje nunca puede quedar por debajo de cero. */
   function calcularPuntaje() {
     var penalizacion = NIVELES[estado.nivel].penalizacion;
     var total =
-      estado.paresEncontrados * PUNTOS_POR_PAR - estado.errores * penalizacion;
+      estado.paresEncontrados * PUNTOS_POR_PAR -
+      estado.errores * penalizacion -
+      estado.segundos * PUNTOS_QUE_RESTA_CADA_SEGUNDO;
 
     if (total < 0) {
       return 0;
     }
 
     return total;
+  }
+
+  /* Agrega un cero adelante para mostrar siempre dos digitos */
+  function agregarCeroAdelante(numero) {
+    if (numero < 10) {
+      return "0" + numero;
+    }
+
+    return "" + numero;
+  }
+
+  /* Convierte una cantidad de segundos al formato mm:ss */
+  function formatearTiempo(segundos) {
+    var minutos = Math.floor(segundos / 60);
+    var resto = segundos % 60;
+
+    return agregarCeroAdelante(minutos) + ":" + agregarCeroAdelante(resto);
   }
 
   /* Vuelca los contadores del estado en el panel de datos */
@@ -200,6 +223,32 @@ var Juego = (function () {
     datoPares.textContent = estado.paresEncontrados;
     datoErrores.textContent = estado.errores;
     datoPuntaje.textContent = estado.puntaje;
+    datoTiempo.textContent = formatearTiempo(estado.segundos);
+  }
+
+  /* Suma un segundo y refresca el panel */
+  function correrUnSegundo() {
+    estado.segundos = estado.segundos + 1;
+    actualizarPanel();
+  }
+
+  /* Arranca el temporizador si todavia no esta corriendo */
+  function iniciarTemporizador() {
+    if (estado.temporizadorId !== null) {
+      return;
+    }
+
+    estado.temporizadorId = setInterval(correrUnSegundo, 1000);
+  }
+
+  /* Frena el temporizador de la partida */
+  function detenerTemporizador() {
+    if (estado.temporizadorId === null) {
+      return;
+    }
+
+    clearInterval(estado.temporizadorId);
+    estado.temporizadorId = null;
   }
 
   /* Compara las dos cartas seleccionadas en el turno */
@@ -245,6 +294,8 @@ var Juego = (function () {
       return;
     }
 
+    /* El reloj arranca recien cuando el jugador descubre la primera carta */
+    iniciarTemporizador();
     descubrirCarta(this, indice);
 
     if (estado.primeraCarta === null) {
@@ -259,6 +310,8 @@ var Juego = (function () {
 
   /* Inicia una partida nueva con el jugador y el nivel indicados */
   function iniciarPartida(nombreJugador, nivel) {
+    detenerTemporizador();
+
     estado.nombreJugador = nombreJugador;
     estado.nivel = nivel;
     estado.cartas = armarCartas(nivel);
@@ -270,6 +323,7 @@ var Juego = (function () {
     estado.errores = 0;
     estado.paresEncontrados = 0;
     estado.puntaje = 0;
+    estado.segundos = 0;
 
     dibujarTablero();
     actualizarPanel();
