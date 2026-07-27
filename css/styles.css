@@ -68,12 +68,6 @@ body {
   padding: 20px 15px;
 }
 
-/* Utilidades */
-
-.oculto {
-  display: none;
-}
-
 /* Pantalla de inicio */
 
 .pantalla-inicio {
@@ -595,4 +589,14 @@ body.tema-oscuro {
     min-width: 78px;
     padding: 6px 9px;
   }
+}
+
+/* Utilidades.
+   Van al final del archivo a proposito: al tener la misma especificidad que
+   las clases de arriba, la regla que se escribe ultima es la que gana.
+   Si .oculto se declarara antes, no podria tapar a .fondo-modal ni a las
+   pantallas, porque esas clases tambien definen la propiedad display. */
+
+.oculto {
+  display: none;
 }
