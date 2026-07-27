@@ -42,6 +42,7 @@ var Juego = (function () {
   /* Valores del sistema de puntaje */
   var PUNTOS_POR_PAR = 100;
   var PUNTOS_QUE_RESTA_CADA_SEGUNDO = 1;
+  var BONUS_POR_TERMINAR = 300;
 
   /* Estado de la partida en curso */
   var estado = {
@@ -66,6 +67,9 @@ var Juego = (function () {
   var datoErrores = document.getElementById("dato-errores");
   var datoPuntaje = document.getElementById("dato-puntaje");
   var datoTiempo = document.getElementById("dato-tiempo");
+
+  /* Funcion que se ejecuta cuando el jugador encuentra todos los pares */
+  var funcionAlFinalizar = null;
 
   /* Mezcla un arreglo con el algoritmo de Fisher-Yates */
   function mezclarArreglo(arreglo) {
@@ -251,6 +255,42 @@ var Juego = (function () {
     estado.temporizadorId = null;
   }
 
+  /* Cierra la partida, frena el reloj y avisa el resultado a la interfaz */
+  function finalizarPartida() {
+    var resultado;
+
+    detenerTemporizador();
+    estado.partidaActiva = false;
+    estado.puntaje = calcularPuntaje() + BONUS_POR_TERMINAR;
+
+    datoPuntaje.textContent = estado.puntaje;
+
+    resultado = {
+      nombreJugador: estado.nombreJugador,
+      nivel: estado.nivel,
+      nombreNivel: NIVELES[estado.nivel].nombre,
+      intentos: estado.intentos,
+      errores: estado.errores,
+      paresEncontrados: estado.paresEncontrados,
+      segundos: estado.segundos,
+      tiempo: formatearTiempo(estado.segundos),
+      puntaje: estado.puntaje
+    };
+
+    if (funcionAlFinalizar !== null) {
+      funcionAlFinalizar(resultado);
+    }
+  }
+
+  /* Revisa si ya se encontraron todos los pares del tablero */
+  function verificarFinDePartida() {
+    var totalDePares = NIVELES[estado.nivel].pares;
+
+    if (estado.paresEncontrados === totalDePares) {
+      finalizarPartida();
+    }
+  }
+
   /* Compara las dos cartas seleccionadas en el turno */
   function compararCartas() {
     var primera = estado.cartas[estado.primeraCarta.indice];
@@ -264,6 +304,7 @@ var Juego = (function () {
       marcarCartaEmparejada(estado.segundaCarta.elemento, estado.segundaCarta.indice);
       limpiarSeleccion();
       actualizarPanel();
+      verificarFinDePartida();
       return;
     }
 
@@ -339,8 +380,14 @@ var Juego = (function () {
     return NIVELES[nivel].nombre;
   }
 
+  /* Guarda la funcion que la interfaz quiere ejecutar al terminar la partida */
+  function definirAlFinalizar(funcion) {
+    funcionAlFinalizar = funcion;
+  }
+
   return {
     iniciarPartida: iniciarPartida,
+    definirAlFinalizar: definirAlFinalizar,
     hayAnimalesSuficientes: hayAnimalesSuficientes,
     obtenerNombreNivel: obtenerNombreNivel
   };

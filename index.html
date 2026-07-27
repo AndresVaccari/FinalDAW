@@ -94,6 +94,46 @@
       </section>
     </main>
 
+    <!-- Modal con el resultado final de la partida -->
+    <div class="fondo-modal oculto" id="modal-resultado">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-resultado"
+      >
+        <h2 class="modal-titulo" id="titulo-resultado">Ganaste!</h2>
+        <p class="texto-ayuda">Encontraste todos los pares del tablero.</p>
+
+        <ul class="lista-resultado">
+          <li class="fila-resultado">
+            <span>Jugador</span><span id="resultado-jugador">-</span>
+          </li>
+          <li class="fila-resultado">
+            <span>Nivel</span><span id="resultado-nivel">-</span>
+          </li>
+          <li class="fila-resultado">
+            <span>Intentos</span><span id="resultado-intentos">0</span>
+          </li>
+          <li class="fila-resultado">
+            <span>Errores</span><span id="resultado-errores">0</span>
+          </li>
+          <li class="fila-resultado">
+            <span>Tiempo total</span><span id="resultado-tiempo">00:00</span>
+          </li>
+          <li class="fila-resultado destacada">
+            <span>Puntaje final</span><span id="resultado-puntaje">0</span>
+          </li>
+        </ul>
+
+        <div class="acciones-modal">
+          <button class="boton boton-principal" id="boton-cerrar-resultado" type="button">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+
     <footer class="pie">
       <p>Proyecto Final - Desarrollo y Arquitecturas Web - UAI 2026</p>
     </footer>

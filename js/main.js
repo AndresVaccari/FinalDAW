@@ -12,6 +12,15 @@
   var datoJugador = document.getElementById("dato-jugador");
   var datoNivel = document.getElementById("dato-nivel");
 
+  var modalResultado = document.getElementById("modal-resultado");
+  var resultadoJugador = document.getElementById("resultado-jugador");
+  var resultadoNivel = document.getElementById("resultado-nivel");
+  var resultadoIntentos = document.getElementById("resultado-intentos");
+  var resultadoErrores = document.getElementById("resultado-errores");
+  var resultadoTiempo = document.getElementById("resultado-tiempo");
+  var resultadoPuntaje = document.getElementById("resultado-puntaje");
+  var botonCerrarResultado = document.getElementById("boton-cerrar-resultado");
+
   /* Muestra un mensaje de error dentro de la interfaz */
   function mostrarError(texto) {
     mensajeErrorInicio.textContent = texto;
@@ -31,6 +40,24 @@
 
     pantallaInicio.className = "pantalla-inicio oculto";
     pantallaJuego.className = "pantalla-juego";
+  }
+
+  /* Carga el resultado de la partida y abre el modal final */
+  function mostrarResultado(resultado) {
+    resultadoJugador.textContent = resultado.nombreJugador;
+    resultadoNivel.textContent = resultado.nombreNivel;
+    resultadoIntentos.textContent = resultado.intentos;
+    resultadoErrores.textContent = resultado.errores;
+    resultadoTiempo.textContent = resultado.tiempo;
+    resultadoPuntaje.textContent = resultado.puntaje;
+
+    modalResultado.className = "fondo-modal";
+    botonCerrarResultado.focus();
+  }
+
+  /* Cierra el modal con el resultado final */
+  function cerrarResultado() {
+    modalResultado.className = "fondo-modal oculto";
   }
 
   /* Valida los datos ingresados antes de iniciar la partida */
@@ -74,4 +101,7 @@
   formularioInicio.addEventListener("submit", alEnviarFormulario);
   inputNombre.addEventListener("input", ocultarError);
   selectNivel.addEventListener("change", ocultarError);
+  botonCerrarResultado.addEventListener("click", cerrarResultado);
+
+  Juego.definirAlFinalizar(mostrarResultado);
 })();
