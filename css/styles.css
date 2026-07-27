@@ -268,6 +268,44 @@ body {
   transform: rotateY(360deg);
 }
 
+/* Estado de par encontrado: se marca con color y con un simbolo */
+
+.carta.emparejada {
+  cursor: default;
+}
+
+.carta.emparejada .carta-frente {
+  background-color: #e2f2e8;
+  border-color: #1d4632;
+  border-width: 3px;
+}
+
+.carta.emparejada .carta-frente::after {
+  content: "✔";
+  position: absolute;
+  top: 1px;
+  right: 5px;
+  font-size: 13px;
+  color: #1d4632;
+}
+
+/* Estado de par incorrecto: se marca con color y con un simbolo */
+
+.carta.incorrecta .carta-frente {
+  background-color: #fbe3e3;
+  border-color: #9e2020;
+  border-width: 3px;
+}
+
+.carta.incorrecta .carta-frente::after {
+  content: "✖";
+  position: absolute;
+  top: 1px;
+  right: 5px;
+  font-size: 13px;
+  color: #9e2020;
+}
+
 /* Pie de pagina */
 
 .pie {

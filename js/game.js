@@ -36,11 +36,17 @@ var Juego = (function () {
     { emoji: "🐳", nombre: "ballena" }
   ];
 
+  /* Tiempo que quedan visibles dos cartas que no coinciden */
+  var MILISEGUNDOS_PARA_TAPAR = 900;
+
   /* Estado de la partida en curso */
   var estado = {
     nombreJugador: "",
     nivel: "facil",
     cartas: [],
+    primeraCarta: null,
+    segundaCarta: null,
+    tableroBloqueado: false,
     partidaActiva: false
   };
 
@@ -122,13 +128,91 @@ var Juego = (function () {
     }
   }
 
-  /* Da vuelta la carta sobre la que se hizo click */
-  function alHacerClickEnCarta() {
-    if (!estado.partidaActiva) {
+  /* Muestra una carta y actualiza su texto alternativo */
+  function descubrirCarta(elemento, indice) {
+    elemento.className = "carta descubierta";
+    elemento.setAttribute(
+      "aria-label",
+      "Carta " + (indice + 1) + ", " + estado.cartas[indice].nombre
+    );
+  }
+
+  /* Vuelve a tapar una carta */
+  function taparCarta(elemento, indice) {
+    elemento.className = "carta";
+    elemento.setAttribute("aria-label", "Carta " + (indice + 1) + ", tapada");
+  }
+
+  /* Deja una carta fija en el tablero porque ya encontro su pareja */
+  function marcarCartaEmparejada(elemento, indice) {
+    estado.cartas[indice].emparejada = true;
+    elemento.className = "carta descubierta emparejada";
+    elemento.setAttribute(
+      "aria-label",
+      "Carta " + (indice + 1) + ", " + estado.cartas[indice].nombre + ", emparejada"
+    );
+  }
+
+  /* Limpia la seleccion del turno y habilita el tablero */
+  function limpiarSeleccion() {
+    estado.primeraCarta = null;
+    estado.segundaCarta = null;
+    estado.tableroBloqueado = false;
+  }
+
+  /* Tapa las dos cartas del turno cuando no forman un par */
+  function taparCartasDelTurno() {
+    taparCarta(estado.primeraCarta.elemento, estado.primeraCarta.indice);
+    taparCarta(estado.segundaCarta.elemento, estado.segundaCarta.indice);
+    limpiarSeleccion();
+  }
+
+  /* Compara las dos cartas seleccionadas en el turno */
+  function compararCartas() {
+    var primera = estado.cartas[estado.primeraCarta.indice];
+    var segunda = estado.cartas[estado.segundaCarta.indice];
+
+    if (primera.emoji === segunda.emoji) {
+      marcarCartaEmparejada(estado.primeraCarta.elemento, estado.primeraCarta.indice);
+      marcarCartaEmparejada(estado.segundaCarta.elemento, estado.segundaCarta.indice);
+      limpiarSeleccion();
       return;
     }
 
-    this.className = "carta descubierta";
+    /* Las cartas incorrectas quedan visibles un momento antes de taparse */
+    estado.primeraCarta.elemento.className = "carta descubierta incorrecta";
+    estado.segundaCarta.elemento.className = "carta descubierta incorrecta";
+    setTimeout(taparCartasDelTurno, MILISEGUNDOS_PARA_TAPAR);
+  }
+
+  /* Da vuelta la carta sobre la que se hizo click */
+  function alHacerClickEnCarta() {
+    var indice = parseInt(this.getAttribute("data-indice"), 10);
+
+    if (!estado.partidaActiva || estado.tableroBloqueado) {
+      return;
+    }
+
+    /* No se puede elegir una carta ya emparejada */
+    if (estado.cartas[indice].emparejada) {
+      return;
+    }
+
+    /* No se puede elegir dos veces la misma carta en el mismo turno */
+    if (estado.primeraCarta !== null && estado.primeraCarta.indice === indice) {
+      return;
+    }
+
+    descubrirCarta(this, indice);
+
+    if (estado.primeraCarta === null) {
+      estado.primeraCarta = { indice: indice, elemento: this };
+      return;
+    }
+
+    estado.segundaCarta = { indice: indice, elemento: this };
+    estado.tableroBloqueado = true;
+    compararCartas();
   }
 
   /* Inicia una partida nueva con el jugador y el nivel indicados */
@@ -136,6 +220,9 @@ var Juego = (function () {
     estado.nombreJugador = nombreJugador;
     estado.nivel = nivel;
     estado.cartas = armarCartas(nivel);
+    estado.primeraCarta = null;
+    estado.segundaCarta = null;
+    estado.tableroBloqueado = false;
     estado.partidaActiva = true;
 
     dibujarTablero();
